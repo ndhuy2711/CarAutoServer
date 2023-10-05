@@ -1,0 +1,27 @@
+Lấy dữ liệu từ ADT bằng NodeJS sử dụng API của Microsoft :
+Bước 1. Sử dụng method POST để lấy thông tin Access Token của ADT : 
+- Link API : https://login.microsoftonline.com/{tenantId}/oauth2/v2.0/token
+    tenantId: "Azure Active Directory => App registrations => Chọn Resource Group => Directory (tenant) ID",
+- Sử dụng các key x-www-form-urlencoded : 
+    clientId: "Azure Active Directory => App registrations => Chọn Resource Group => Application (client) ID",
+    clientSecret: "Azure Active Directory => App registrations => Chọn Resource Group => Client credentials => Lấy trường Value",
+    scope: "https://digitaltwins.azure.net/.default",
+    grantType: "client_credentials",
+Bước 2. Sử dụng method POST để lấy thông tin dữ liệu ADT :
+- Link API : https://{adtName}.api.eus.digitaltwins.azure.net/query?api-version=2020-10-31
+    adtName : "Tên Azure Digital Twins"
+- Truyền dữ liệu vào header : 
+    Authorization : Baerer AccessToken
+    ( Với AccessToken được lấy từ Bước 1 )
+    Access-Control-Allow-Origin: '*'
+- Truyền dữ liệu vào body : 
+    "query": "SELECT * FROM DIGITALTWINS"
+
+
+
+*** Lưu ý : Đối với code đã được thiết lập sẵn như trong folder này thì Key sẽ được lấy từ Bước 1 -> nó là AccessToken
+=> Sau đó thay AccessToken vừa lấy vào file Key.txt + thay thế các dữ liệu trong file const.js là ok
+
+Cách lấy dữ liệu từ Azure Digital Twin bằng API :
+https://{Name Digital Twins}.api.eus.digitaltwins.azure.net/query?api-version=2020-10-31
+- Để truyền dữ liệu được lên headset ta phải cần có key.pem và cert.pem để start bằng https
